@@ -1,3 +1,8 @@
+using ArtGalleryMini.Data;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+
 namespace ArtGalleryMini.web
 {
     public class Program
@@ -5,6 +10,8 @@ namespace ArtGalleryMini.web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<GalleryDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

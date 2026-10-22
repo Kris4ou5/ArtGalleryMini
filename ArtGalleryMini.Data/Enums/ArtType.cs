@@ -8,6 +8,8 @@ namespace ArtGalleryMini.Data.Enums
 {
     public enum ArtType
     {
-
+        Sculpture,
+        Painting,
+        Cermaric
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,6 +15,7 @@ namespace ArtGalleryMini.Data.Entities
 
         public string Title { get; set; } = string.Empty;
 
+        public Guid AuthorId { get; set; }
         public string Description { get; set; }
 
         public Author Author { get; set; }
@@ -22,6 +24,5 @@ namespace ArtGalleryMini.Data.Entities
 
         public DateOnly CreationDate { get; set; }
         
-
     }
 }

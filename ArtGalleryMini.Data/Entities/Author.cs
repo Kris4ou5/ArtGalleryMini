@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,11 @@ namespace ArtGalleryMini.Data.Entities
 {
     public class Author
     {
-        public Guid Id { get; set; } 
-
+        
+        public Guid Id { get; set; }
+        
         public string Name { get; set; }
 
-        public List<Author> AuthorList { get; set; } = new List<Author>();
+        public List<ArtPiece> ArtPieceList { get; set; } = new List<ArtPiece>();
     }
 }

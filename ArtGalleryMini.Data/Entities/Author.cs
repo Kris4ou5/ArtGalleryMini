@@ -12,6 +12,6 @@ namespace ArtGalleryMini.Data.Entities
 
         public string Name { get; set; }
 
-        public List<Author> AuthorList { get; set; }
+        public List<Author> AuthorList { get; set; } = new List<Author>();
     }
 }

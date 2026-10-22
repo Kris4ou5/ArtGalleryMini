@@ -35,7 +35,10 @@ namespace ArtGalleryMini.Data
 
                 entity.Property(p => p.Title).IsRequired().HasMaxLength(100);
 
-                entity.HasOne<Author>().WithMany(a => a.ArtPieces).HasForeignKey(p => p.AuthorId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(p => p.Author)
+               .WithMany(a => a.ArtPieces)
+               .HasForeignKey(p => p.AuthorId)
+               .OnDelete(DeleteBehavior.Cascade);
             });
 
         }

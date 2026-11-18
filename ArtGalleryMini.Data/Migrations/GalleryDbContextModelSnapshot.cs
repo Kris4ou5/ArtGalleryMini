@@ -41,6 +41,9 @@ namespace ArtGalleryMini.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("PurchaseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -49,6 +52,9 @@ namespace ArtGalleryMini.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("PurchaseId")
+                        .IsUnique();
 
                     b.ToTable("Pieces");
                 });
@@ -69,6 +75,84 @@ namespace ArtGalleryMini.Data.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("ArtGalleryMini.Data.Entities.Exhibition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasMaxLength(100)
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasMaxLength(100)
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exhibitions");
+                });
+
+            modelBuilder.Entity("ArtGalleryMini.Data.Entities.Purchase", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ArtPieceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("FinalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("VisitorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VisitorId");
+
+                    b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("ArtGalleryMini.Data.Entities.Visitor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Visitors");
+                });
+
             modelBuilder.Entity("ArtGalleryMini.Data.Entities.ArtPiece", b =>
                 {
                     b.HasOne("ArtGalleryMini.Data.Entities.Author", "Author")
@@ -77,12 +161,42 @@ namespace ArtGalleryMini.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ArtGalleryMini.Data.Entities.Purchase", "Purchase")
+                        .WithOne("ArtPiece")
+                        .HasForeignKey("ArtGalleryMini.Data.Entities.ArtPiece", "PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Author");
+
+                    b.Navigation("Purchase");
+                });
+
+            modelBuilder.Entity("ArtGalleryMini.Data.Entities.Purchase", b =>
+                {
+                    b.HasOne("ArtGalleryMini.Data.Entities.Visitor", "Visitor")
+                        .WithMany("PurchaseList")
+                        .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Visitor");
                 });
 
             modelBuilder.Entity("ArtGalleryMini.Data.Entities.Author", b =>
                 {
                     b.Navigation("ArtPieces");
+                });
+
+            modelBuilder.Entity("ArtGalleryMini.Data.Entities.Purchase", b =>
+                {
+                    b.Navigation("ArtPiece")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ArtGalleryMini.Data.Entities.Visitor", b =>
+                {
+                    b.Navigation("PurchaseList");
                 });
 #pragma warning restore 612, 618
         }

@@ -23,6 +23,10 @@ namespace ArtGalleryMini.Data.Entities
         public ArtType ArtType { get; set; }
 
         public DateOnly CreationDate { get; set; }
+
+        public  Guid PurchaseId{ get; set; }
+
+        public Purchase? Purchase { get; set; }
         
     }
 }

@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "TrueStart",
+    "Projects": [
+      {
+        "Path": "ArtGalleryMini.web\\ArtGalleryMini.Web.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

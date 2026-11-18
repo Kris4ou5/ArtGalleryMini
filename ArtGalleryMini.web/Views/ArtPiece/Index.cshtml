@@ -1,0 +1,26 @@
+﻿@{
+	ViewData["Title"] = "ArtPiece";
+}
+
+<h1>All art in the Gallery</h1>
+
+<table>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Title</th>
+			<th> </th>
+		</tr>
+
+	</thead>
+	<tbody>
+		@foreach (var artPiece in Model)
+		{
+			<tr>
+				<td>@artPiece.Id</td>
+				<td>@artPiece.Title</td>
+			</tr>
+		}
+	</tbody>
+
+</table>

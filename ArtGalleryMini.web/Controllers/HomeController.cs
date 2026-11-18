@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using ArtGalleryMini.Data;
 using ArtGalleryMini.web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtGalleryMini.web.Controllers
 {
@@ -8,14 +10,21 @@ namespace ArtGalleryMini.web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly GalleryDbContext _context;
+
+        public HomeController(
+            ILogger<HomeController> logger,
+            GalleryDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var artPieces = _context.Pieces.ToList();
+
+            return View(artPieces);
         }
 
         public IActionResult Privacy()
@@ -23,10 +32,9 @@ namespace ArtGalleryMini.web.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
+
+
+
     }
 }

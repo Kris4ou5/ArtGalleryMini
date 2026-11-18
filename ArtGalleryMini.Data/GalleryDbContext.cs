@@ -19,6 +19,11 @@ namespace ArtGalleryMini.Data
         public DbSet<ArtPiece> Pieces => Set <ArtPiece>();
         public DbSet<Author> Authors => Set <Author>();
 
+        public DbSet<Exhibition> Exhibitions => Set <Exhibition>();
+
+        public DbSet<Visitor> Visitors => Set <Visitor>();
+        public DbSet<Purchase> Purchases => Set <Purchase>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,6 +44,36 @@ namespace ArtGalleryMini.Data
                .WithMany(a => a.ArtPieces)
                .HasForeignKey(p => p.AuthorId)
                .OnDelete(DeleteBehavior.Cascade);
+
+                modelBuilder.Entity<ArtPiece>()
+                .HasOne(a => a.Purchase)
+                .WithOne(p => p.ArtPiece)
+                .HasForeignKey<ArtPiece>(a => a.PurchaseId);
+            });
+
+            modelBuilder.Entity<Visitor>(entity =>
+            {
+                entity.HasKey(v => v.Id);
+
+                entity.Property(v => v.FirstName).IsRequired().HasMaxLength(50);
+                entity.Property(v => v.LastName).IsRequired().HasMaxLength(50);  
+            });
+
+            modelBuilder.Entity<Purchase>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(v => v.FinalPrice).IsRequired();
+                entity.Property(v => v.PurchaseDate).IsRequired();
+
+                entity.HasOne(v => v.Visitor).WithMany(p => p.PurchaseList).HasForeignKey(p => p.VisitorId).OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Exhibition>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.Property(a => a.Name).IsRequired().HasMaxLength(100);
+                entity.Property(a => a.StartDate).IsRequired().HasMaxLength(100);
+                entity.Property(a => a.EndDate).IsRequired().HasMaxLength(100);
             });
 
         }

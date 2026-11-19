@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArtGalleryMini.Data.Enums;
+using ArtGalleryMini.Data;
+using ArtGalleryMini.Data.Entities;
 
 namespace ArtGalleryMini.Services.Contracts
 {
-    public interface IArtPieceService
+    public interface IArtPieceService 
     {
-        Task<List<ArtPieceService>> GetAll();
+        Task<List<ArtPiece>> GetAll();
 
         Task Create(string title, string description, ArtType type, DateOnly creationDate, string author);
     }

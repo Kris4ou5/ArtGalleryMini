@@ -2,6 +2,8 @@ using ArtGalleryMini.Data;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using ArtGalleryMini.Services.Contracts;
+using ArtGalleryMini.Services;
 
 namespace ArtGalleryMini.web
 {
@@ -15,6 +17,8 @@ namespace ArtGalleryMini.web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+           builder.Services.AddScoped<IArtPieceService, ArtPieceService>();
 
             var app = builder.Build();
 

@@ -1,0 +1,36 @@
+﻿@using ArtGalleryMini.Data.Enums
+
+@{
+    ViewData["Title"] = "Add Art";
+}
+
+<h1>Submit your art to our gallery</h1>
+
+<form method="post" asp-controller="ArtPiece" asp-action="Add">
+
+    <div class="form-group">
+        <label for="artname">Title of your art:</label><br />
+        <input type="text" id="artname" name="title" /><br />
+
+        <label for="artdesc">Description of your art:</label><br />
+        <input type="text" id="artdesc" name="description" /><br />
+    </div>
+
+    <div class="form-group">
+        <label for="creationdate">Creation date:</label><br />
+        <input type="date" id="creationdate" name="creationDate" /><br />
+
+        <label for="authorname">Author:</label><br />
+        <input type="text" id="authorname" name="author" />
+    </div>
+
+    <label for="arttype">Type of your art:</label><br />
+    <select name="type" id="arttype"
+            asp-items="Html.GetEnumSelectList<ArtType>()">
+    </select>
+
+    <br />
+    <button type="submit" class="btn btn-primary my-3">
+        Запази
+    </button>
+</form>

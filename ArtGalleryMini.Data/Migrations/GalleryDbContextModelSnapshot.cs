@@ -41,7 +41,7 @@ namespace ArtGalleryMini.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PurchaseId")
+                    b.Property<Guid?>("PurchaseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -54,7 +54,8 @@ namespace ArtGalleryMini.Data.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("PurchaseId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PurchaseId] IS NOT NULL");
 
                     b.ToTable("Pieces");
                 });
@@ -163,9 +164,7 @@ namespace ArtGalleryMini.Data.Migrations
 
                     b.HasOne("ArtGalleryMini.Data.Entities.Purchase", "Purchase")
                         .WithOne("ArtPiece")
-                        .HasForeignKey("ArtGalleryMini.Data.Entities.ArtPiece", "PurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArtGalleryMini.Data.Entities.ArtPiece", "PurchaseId");
 
                     b.Navigation("Author");
 

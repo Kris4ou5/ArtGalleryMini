@@ -48,7 +48,8 @@ namespace ArtGalleryMini.Data
                 modelBuilder.Entity<ArtPiece>()
                 .HasOne(a => a.Purchase)
                 .WithOne(p => p.ArtPiece)
-                .HasForeignKey<ArtPiece>(a => a.PurchaseId);
+                .HasForeignKey<ArtPiece>(a => a.PurchaseId).IsRequired(false);
+
             });
 
             modelBuilder.Entity<Visitor>(entity =>

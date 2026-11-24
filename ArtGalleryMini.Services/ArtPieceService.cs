@@ -51,8 +51,6 @@ namespace ArtGalleryMini.Services
                 Author = _author,
                 AuthorId = _author.Id,
 
-
-               PurchaseId = null,
                 Purchase = null
             };
 

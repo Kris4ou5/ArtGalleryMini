@@ -12,6 +12,8 @@ using ArtGalleryMini.Data.Enums;
 using ArtGalleryMini.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using ArtGalleryMini.Services;
+using ArtGalleryMini.Services.DTOs.ArtPieces;
 
 namespace ArtGalleryMini.Services
 {
@@ -58,9 +60,13 @@ namespace ArtGalleryMini.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task<List<ArtPiece>> GetAll()
+        public Task<List<ArtPieceListDto>> GetAll()
         {
-            return _dbContext.Pieces.Include(a => a.Author).OrderBy(a => a.Title).ToListAsync();
+            return _dbContext.Pieces.OrderBy(a => a.Title)
+                .Select(a => new ArtPieceListDto{
+                    ArtPieceId = a.Id,Title = a.Title,AuthorName = a.Author.Name,ArtType = a.ArtType
+                 }).ToListAsync();
+
         }
 
         

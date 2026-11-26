@@ -2,7 +2,8 @@
 using ArtGalleryMini.Data.Enums;
 using ArtGalleryMini.Services;
 using ArtGalleryMini.Services.Contracts;
-using ArtGalleryMini.Web.Models.ArtPieces;
+using ArtGalleryMini.Web.ViewModels;
+using ArtGalleryMini.Web.ViewModels.ArtPieces;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
 

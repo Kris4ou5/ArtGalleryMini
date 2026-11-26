@@ -20,12 +20,12 @@ else{
 
 	</thead>
 	<tbody>
-		@foreach (var artPiece in Model)
+			@foreach (var artPiece in Model.ArtPieces)
 		{
 			<tr>
-				<td>@artPiece.Id</td>
-				<td>@artPiece.Title</td>
-				<td>@artPiece.Author.Name</td>
+			    <td>@artPiece.Title</td>
+			    <td>@artPiece.AuthorName</td>
+				<td>@artPiece.ArtType</td>
 			</tr>
 		}
 	</tbody>

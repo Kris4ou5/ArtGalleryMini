@@ -2,6 +2,7 @@
 using ArtGalleryMini.Data.Enums;
 using ArtGalleryMini.Services;
 using ArtGalleryMini.Services.Contracts;
+using ArtGalleryMini.Web.Models.ArtPieces;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,12 @@ namespace ArtGalleryMini.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var artPieces = await _artPieceService.GetAll();
+            var model = new ArtPiecesIndexViewModel
+            {
+                ArtPieces = await _artPieceService.GetAll()
+            };
 
-            return View(artPieces);
+            return View(model);
         }
 
         

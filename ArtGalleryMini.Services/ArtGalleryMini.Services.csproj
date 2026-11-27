@@ -10,4 +10,10 @@
     <ProjectReference Include="..\ArtGalleryMini.Data\ArtGalleryMini.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Exhibitions\" />
+    <Folder Include="DTOs\Vistiors\" />
+    <Folder Include="DTOs\Purchases\" />
+  </ItemGroup>
+
 </Project>

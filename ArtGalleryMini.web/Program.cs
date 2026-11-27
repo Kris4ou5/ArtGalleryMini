@@ -18,7 +18,11 @@ namespace ArtGalleryMini.web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-           builder.Services.AddScoped<IArtPieceService, ArtPieceService>();
+            builder.Services.AddScoped<IArtPieceService, ArtPieceService>();
+            builder.Services.AddScoped<IAuthorService, AuthorService>();
+            builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
+            builder.Services.AddScoped<IVisitorService, VisitorService>();
+            builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 
             var app = builder.Build();
 

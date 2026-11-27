@@ -1,17 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ArtGalleryMini.Data;
-using ArtGalleryMini.Data.Entities;
+using ArtGalleryMini.Services.DTOs.Authors;
 
-namespace ArtGalleryMini.Services.Contracts
+namespace ArtGalleryMini.Services.Contracts;
+
+public interface IAuthorService
 {
-    public interface IAuthorService
-    {
-        Task<List<Author>> GetAll();
-
-        Task Remove(string name);
-    }
+    Task<List<AuthorListDTO>> GetAll();
+    Task<AuthorEditDto?> GetForEdit(Guid id);
+    Task Create(AuthorCreateDto dto);
+    Task Update(AuthorEditDto dto);
+    Task Remove(string name);
 }

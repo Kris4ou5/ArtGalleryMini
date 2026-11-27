@@ -1,41 +1,83 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using ArtGalleryMini.Data;
 using ArtGalleryMini.Data.Entities;
 using ArtGalleryMini.Services.Contracts;
+using ArtGalleryMini.Services.DTOs.Authors;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArtGalleryMini.Services
+namespace ArtGalleryMini.Services;
+
+public class AuthorService : IAuthorService
 {
-    public class AuthorService : IAuthorService
+    private readonly GalleryDbContext _dbContext;
+
+    public AuthorService(GalleryDbContext dbContext)
     {
-        private readonly GalleryDbContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public AuthorService(GalleryDbContext dbContext)
+    public Task<List<AuthorListDTO>> GetAll()
+    {
+        return _dbContext.Authors
+            .OrderBy(author => author.Name)
+            .Select(author => new AuthorListDTO
+            {
+                Id = author.Id,
+                Name = author.Name,
+                ArtPiecesCount = author.ArtPieces.Count
+            })
+            .ToListAsync();
+    }
+
+    public Task<AuthorEditDto?> GetForEdit(Guid id)
+    {
+        return _dbContext.Authors
+            .Where(author => author.Id == id)
+            .Select(author => new AuthorEditDto
+            {
+                Id = author.Id,
+                Name = author.Name
+            })
+            .SingleOrDefaultAsync();
+    }
+
+    public async Task Create(AuthorCreateDto dto)
+    {
+        var author = new Author
         {
-            _dbContext = dbContext;
+            Id = Guid.NewGuid(),
+            Name = dto.Name
+        };
+
+        _dbContext.Authors.Add(author);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task Update(AuthorEditDto dto)
+    {
+        var author = await _dbContext.Authors.FindAsync(dto.Id);
+        if (author == null)
+        {
+            throw new ArgumentException("Author cant be found");
         }
 
-        public Task<List<Author>> GetAll()
+        author.Name = dto.Name;
+        await _dbContext.SaveChangesAsync();
+        
+    }
+
+    public async Task Remove(string name)
+    {
+        var author = await _dbContext.Authors.FirstOrDefaultAsync(author => author.Name == name);
+        if (author == null)
         {
-            return _dbContext.Authors.OrderBy(a => a.Name).ToListAsync();
+            return;
         }
 
-        public async Task Remove(string name)
-        {
-            var author = _dbContext.Authors.FirstOrDefault(a => a.Name == name);
-
-            if (author == null) return;
-
-            _dbContext.Authors.Remove(author);
-            _dbContext.SaveChanges();
-        }
-
-
+        _dbContext.Authors.Remove(author);
+        await _dbContext.SaveChangesAsync();
     }
 }
